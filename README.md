@@ -1,4 +1,4 @@
-This is a first todo list react app.
+This is my first todo list react app.
 
 ## Available Scripts
 
