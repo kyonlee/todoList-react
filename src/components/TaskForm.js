@@ -13,8 +13,16 @@ class TaskForm extends React.Component {
 
 	onTaskSubmit = event => {
 		event.preventDefault();
+
+		if (!this.state.taskName || !this.state.description) {
+			return;
+		}
+
 		this.props.onSubmit(this.state);
+		this.setState({ taskName: '', description: '' });
 	};
+
+	// todo validation and error messages
 
 	render() {
 		return (
@@ -28,19 +36,21 @@ class TaskForm extends React.Component {
 					<div className="row">
 						<div className="input-field col s6">
 							<input
-								id="task-name"
+								id="task_name"
 								type="text"
+								maxLength="25"
 								value={this.state.taskName}
 								onChange={e => this.setState({ taskName: e.target.value })}
 							/>
-							<label htmlFor="task-name">Task Name</label>
+							<label htmlFor="task_name">Task Name</label>
 						</div>
 					</div>
 					<div className="row">
 						<div className="input-field col s12">
-							<textarea
+							<input
 								id="description"
-								className="materialize-textarea"
+								type="text"
+								maxLength="50"
 								value={this.state.description}
 								onChange={e => this.setState({ description: e.target.value })}
 							/>

@@ -8,6 +8,8 @@ class App extends React.Component {
 		tasks: []
 	};
 
+	// todo editing and removing task feature
+
 	render() {
 		return (
 			<div className="container">
@@ -16,7 +18,9 @@ class App extends React.Component {
 						this.setState({ tasks: [...this.state.tasks, task] })
 					}
 				/>
-				<TaskList tasks={this.state.tasks} />
+				{this.state.tasks.length === 0 ? null : (
+					<TaskList tasks={this.state.tasks} />
+				)}
 			</div>
 		);
 	}
