@@ -1,26 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import TaskItem from './TaskItem';
 
 const TaskList = props => {
 	const renderList = () => {
 		return props.tasks.map((task, index) => {
-			return (
-				<TaskItem
-					key={index}
-					taskName={task.taskName}
-					description={task.description}
-				/>
-			);
+			return <TaskItem key={index} task={task} />;
 		});
 	};
 
 	return (
 		<div>
 			<h3>Task List</h3>
-			<ul className="collection">{renderList()}</ul>
+			<div className="section">{renderList()}</div>
 		</div>
 	);
 };
 
-export default TaskList;
+const mapStateToProps = ({ tasks }) => {
+	return {
+		tasks
+	};
+};
+
+export default connect(mapStateToProps)(TaskList);

@@ -1,70 +1,101 @@
 import React from 'react';
-import M from 'materialize-css';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { connect } from 'react-redux';
 
-class TaskForm extends React.Component {
-	state = {
-		taskName: '',
-		description: ''
-	};
+import { deselectTask } from '../actions';
 
-	componentDidMount() {
-		M.AutoInit();
-	}
+const TaskForm = props => {
+	return (
+		<Formik
+			enableReinitialize={true}
+			initialValues={{
+				taskName: props.task.taskName,
+				description: props.task.description
+			}}
+			onSubmit={(values, { resetForm }) => {
+				props.onSubmit(values);
 
-	onTaskSubmit = event => {
-		event.preventDefault();
-
-		if (!this.state.taskName || !this.state.description) {
-			return;
-		}
-
-		this.props.onSubmit(this.state);
-		this.setState({ taskName: '', description: '' });
-	};
-
-	// todo validation and error messages
-
-	render() {
-		return (
-			<div className="row">
-				<h2>Add a new task</h2>
-				<form
-					className="col s12"
-					autoComplete="off"
-					onSubmit={this.onTaskSubmit}
-				>
-					<div className="row">
-						<div className="input-field col s6">
-							<input
-								id="task_name"
-								type="text"
-								maxLength="25"
-								value={this.state.taskName}
-								onChange={e => this.setState({ taskName: e.target.value })}
-							/>
-							<label htmlFor="task_name">Task Name</label>
+				document.activeElement.blur();
+				resetForm();
+			}}
+			onReset={() => {
+				props.deselectTask();
+			}}
+			validationSchema={Yup.object().shape({
+				taskName: Yup.string().required('Please provide a task name'),
+				description: Yup.string().required('Please provide a description')
+			})}
+		>
+			{({
+				values,
+				errors,
+				touched,
+				handleChange,
+				handleSubmit,
+				handleBlur,
+				handleReset,
+				isSubmitting
+			}) => {
+				return (
+					<form className="col s12" autoComplete="off" onSubmit={handleSubmit}>
+						<div className="row">
+							<div className="col s6">
+								<label>Task Name</label>
+								<input
+									id="taskName"
+									name="taskName"
+									type="text"
+									maxLength="25"
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.taskName}
+								/>
+								{errors.taskName && touched.taskName && (
+									<div className="red-text">{errors.taskName}</div>
+								)}
+							</div>
 						</div>
-					</div>
-					<div className="row">
-						<div className="input-field col s12">
-							<input
-								id="description"
-								type="text"
-								maxLength="50"
-								value={this.state.description}
-								onChange={e => this.setState({ description: e.target.value })}
-							/>
-							<label htmlFor="description">Description</label>
-						</div>
-					</div>
-					<button className="btn right" type="submit">
-						<i className="material-icons right">add</i>
-						Add
-					</button>
-				</form>
-			</div>
-		);
-	}
-}
+						<div className="row">
+							<div className="col s12">
+								<label>Description</label>
+								<input
+									id="description"
+									name="description"
+									type="text"
+									maxLength="50"
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.description}
+								/>
 
-export default TaskForm;
+								{errors.description && touched.description && (
+									<div className="red-text">{errors.description}</div>
+								)}
+							</div>
+						</div>
+						<button
+							className="btn red"
+							type="button"
+							disabled={isSubmitting}
+							onClick={handleReset}
+						>
+							Cancel
+						</button>
+						<button className="btn right" type="submit" disabled={isSubmitting}>
+							<i className="material-icons right">
+								{props.formType.toLowerCase()}
+							</i>
+							{props.formType}
+						</button>
+					</form>
+				);
+			}}
+		</Formik>
+	);
+};
+
+export default connect(
+	null,
+	{ deselectTask }
+)(TaskForm);

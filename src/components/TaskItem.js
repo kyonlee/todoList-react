@@ -1,14 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const TaskItem = props => {
-	// todo removing and editing buttons
+import { deleteTask, selectTask } from '../actions';
 
+const TaskItem = ({ task, deleteTask, selectTask }) => {
 	return (
-		<li className="collection-item">
-			<h5 className="title">{props.taskName}</h5>
-			<p>{props.description}</p>
-		</li>
+		<div className="card">
+			<div className="card-content">
+				<span className="card-title">{task.taskName}</span>
+				<p>{task.description}</p>
+			</div>
+			<div className="card-action">
+				<a href="#/">
+					<i className="material-icons" onClick={() => selectTask(task)}>
+						edit
+					</i>
+				</a>
+				<a href="#/">
+					<i className="material-icons" onClick={() => deleteTask(task)}>
+						delete
+					</i>
+				</a>
+			</div>
+		</div>
 	);
 };
 
-export default TaskItem;
+export default connect(
+	null,
+	{ deleteTask, selectTask }
+)(TaskItem);

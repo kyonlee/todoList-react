@@ -1,29 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import TaskForm from './TaskForm';
+import TaskAdd from './TaskAdd';
+import TaskEdit from './TaskEdit';
 import TaskList from './TaskList';
 
-class App extends React.Component {
-	state = {
-		tasks: []
-	};
-
+const App = props => {
 	// todo editing and removing task feature
 
-	render() {
-		return (
-			<div className="container">
-				<TaskForm
-					onSubmit={task =>
-						this.setState({ tasks: [...this.state.tasks, task] })
-					}
-				/>
-				{this.state.tasks.length === 0 ? null : (
-					<TaskList tasks={this.state.tasks} />
-				)}
+	return (
+		<div className="container">
+			<div className="section">
+				{props.selectedTask ? <TaskEdit /> : <TaskAdd />}
 			</div>
-		);
-	}
-}
 
-export default App;
+			<TaskList />
+		</div>
+	);
+};
+
+const mapStateToProps = ({ selectedTask }) => {
+	return {
+		selectedTask
+	};
+};
+
+export default connect(mapStateToProps)(App);
