@@ -13,7 +13,6 @@ const App = props => {
 			<div className="section">
 				{props.selectedTask ? <TaskEdit /> : <TaskAdd />}
 			</div>
-
 			<TaskList />
 		</div>
 	);

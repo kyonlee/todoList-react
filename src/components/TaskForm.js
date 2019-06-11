@@ -10,8 +10,8 @@ const TaskForm = props => {
 		<Formik
 			enableReinitialize={true}
 			initialValues={{
-				taskName: props.task.taskName,
-				description: props.task.description
+				taskName: props.initValues.taskName,
+				description: props.initValues.description
 			}}
 			onSubmit={(values, { resetForm }) => {
 				props.onSubmit(values);
@@ -19,9 +19,7 @@ const TaskForm = props => {
 				document.activeElement.blur();
 				resetForm();
 			}}
-			onReset={() => {
-				props.deselectTask();
-			}}
+			onReset={() => props.deselectTask()}
 			validationSchema={Yup.object().shape({
 				taskName: Yup.string().required('Please provide a task name'),
 				description: Yup.string().required('Please provide a description')

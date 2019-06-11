@@ -6,17 +6,19 @@ import {
 	EDIT_TASK
 } from './types';
 
+let nextTodoId = 0;
+
 export const createTask = task => {
 	return {
 		type: CREATE_TASK,
-		payload: task
+		payload: { ...task, id: nextTodoId++ }
 	};
 };
 
-export const deleteTask = task => {
+export const deleteTask = taskId => {
 	return {
 		type: DELETE_TASK,
-		payload: task
+		payload: taskId
 	};
 };
 

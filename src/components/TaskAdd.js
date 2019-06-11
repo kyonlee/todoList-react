@@ -9,7 +9,7 @@ const TaskAdd = ({ createTask }) => {
 		<div className="row">
 			<h2>Add a new task</h2>
 			<TaskForm
-				task={{ taskName: '', description: '' }}
+				initValues={{ taskName: '', description: '' }}
 				formType="Add"
 				onSubmit={task => createTask(task)}
 			/>

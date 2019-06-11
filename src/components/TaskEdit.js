@@ -9,10 +9,10 @@ const TaskEdit = ({ selectedTask, editTask, deselectTask }) => {
 		<div className="row">
 			<h2>Edit a task</h2>
 			<TaskForm
-				task={selectedTask}
+				initValues={selectedTask}
 				formType="Edit"
-				onSubmit={task => {
-					editTask(task);
+				onSubmit={async task => {
+					await editTask(task);
 					deselectTask();
 				}}
 			/>

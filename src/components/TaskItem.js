@@ -17,7 +17,7 @@ const TaskItem = ({ task, deleteTask, selectTask }) => {
 					</i>
 				</a>
 				<a href="#/">
-					<i className="material-icons" onClick={() => deleteTask(task)}>
+					<i className="material-icons" onClick={() => deleteTask(task.id)}>
 						delete
 					</i>
 				</a>
