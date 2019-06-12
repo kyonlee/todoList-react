@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 
 import { deselectTask } from '../actions';
 
-const TaskForm = props => {
+const TaskForm = ({ initValues, btnConfig, onSubmit, deselectTask }) => {
 	return (
 		<Formik
 			enableReinitialize={true}
 			initialValues={{
-				taskName: props.initValues.taskName,
-				description: props.initValues.description
+				taskName: initValues.taskName,
+				description: initValues.description
 			}}
 			onSubmit={(values, { resetForm }) => {
-				props.onSubmit(values);
+				onSubmit(values);
 
 				document.activeElement.blur();
 				resetForm();
 			}}
-			onReset={() => props.deselectTask()}
+			onReset={() => deselectTask()}
 			validationSchema={Yup.object().shape({
 				taskName: Yup.string().required('Please provide a task name'),
 				description: Yup.string().required('Please provide a description')
@@ -81,10 +81,8 @@ const TaskForm = props => {
 							Cancel
 						</button>
 						<button className="btn right" type="submit" disabled={isSubmitting}>
-							<i className="material-icons right">
-								{props.formType.toLowerCase()}
-							</i>
-							{props.formType}
+							<i className="material-icons right">{btnConfig.toLowerCase()}</i>
+							{btnConfig}
 						</button>
 					</form>
 				);

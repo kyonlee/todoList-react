@@ -1,4 +1,4 @@
-import { CREATE_TASK, DELETE_TASK, EDIT_TASK } from '../actions/types';
+import { CREATE_TASK, DELETE_TASK, UPDATE_TASK } from '../actions/types';
 
 export default (state = [], action) => {
 	switch (action.type) {
@@ -6,9 +6,9 @@ export default (state = [], action) => {
 			return [...state, action.payload];
 		case DELETE_TASK:
 			return state.filter(el => el.id !== action.payload);
-		case EDIT_TASK:
+		case UPDATE_TASK:
 			return state.map(el =>
-				el === action.payload.selectedTask ? action.payload.editedTask : el
+				el.id === action.payload.id ? action.payload : el
 			);
 		default:
 			return state;

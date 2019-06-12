@@ -10,9 +10,10 @@ const TaskEdit = ({ selectedTask, editTask, deselectTask }) => {
 			<h2>Edit a task</h2>
 			<TaskForm
 				initValues={selectedTask}
-				formType="Edit"
-				onSubmit={async task => {
-					await editTask(task);
+				btnConfig="Edit"
+				onSubmit={async formValues => {
+					const { id, completed } = selectedTask;
+					await editTask({ ...formValues, id, completed });
 					deselectTask();
 				}}
 			/>
@@ -20,13 +21,7 @@ const TaskEdit = ({ selectedTask, editTask, deselectTask }) => {
 	);
 };
 
-const mapStateToProps = ({ selectedTask }) => {
-	return {
-		selectedTask
-	};
-};
-
 export default connect(
-	mapStateToProps,
+	null,
 	{ editTask, deselectTask }
 )(TaskEdit);

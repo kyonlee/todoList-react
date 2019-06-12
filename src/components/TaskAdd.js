@@ -10,8 +10,8 @@ const TaskAdd = ({ createTask }) => {
 			<h2>Add a new task</h2>
 			<TaskForm
 				initValues={{ taskName: '', description: '' }}
-				formType="Add"
-				onSubmit={task => createTask(task)}
+				btnConfig="Add"
+				onSubmit={formValues => createTask(formValues)}
 			/>
 		</div>
 	);

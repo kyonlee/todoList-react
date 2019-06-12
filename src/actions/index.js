@@ -3,15 +3,15 @@ import {
 	DELETE_TASK,
 	SELECT_TASK,
 	DESELECT_TASK,
-	EDIT_TASK
+	UPDATE_TASK
 } from './types';
 
 let nextTodoId = 0;
 
-export const createTask = task => {
+export const createTask = formValues => {
 	return {
 		type: CREATE_TASK,
-		payload: { ...task, id: nextTodoId++ }
+		payload: { ...formValues, id: nextTodoId++, completed: false }
 	};
 };
 
@@ -35,14 +35,16 @@ export const deselectTask = () => {
 	};
 };
 
-export const editTask = editedTask => (dispatch, getState) => {
-	const { selectedTask } = getState();
+export const editTask = updatedTask => {
+	return {
+		type: UPDATE_TASK,
+		payload: updatedTask
+	};
+};
 
-	dispatch({
-		type: EDIT_TASK,
-		payload: {
-			selectedTask,
-			editedTask
-		}
-	});
+export const toggleTask = task => {
+	return {
+		type: UPDATE_TASK,
+		payload: { ...task, completed: !task.completed }
+	};
 };

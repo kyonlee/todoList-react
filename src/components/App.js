@@ -5,13 +5,11 @@ import TaskAdd from './TaskAdd';
 import TaskEdit from './TaskEdit';
 import TaskList from './TaskList';
 
-const App = props => {
-	// todo editing and removing task feature
-
+const App = ({ selectedTask }) => {
 	return (
 		<div className="container">
 			<div className="section">
-				{props.selectedTask ? <TaskEdit /> : <TaskAdd />}
+				{selectedTask ? <TaskEdit selectedTask={selectedTask} /> : <TaskAdd />}
 			</div>
 			<TaskList />
 		</div>

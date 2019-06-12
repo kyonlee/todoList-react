@@ -1,23 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { deleteTask, selectTask } from '../actions';
+import { deleteTask, selectTask, toggleTask, deselectTask } from '../actions';
 
-const TaskItem = ({ task, deleteTask, selectTask }) => {
+const TaskItem = ({
+	task,
+	deleteTask,
+	selectTask,
+	toggleTask,
+	deselectTask
+}) => {
 	return (
-		<div className="card">
-			<div className="card-content">
+		<div
+			className={`card ${task.completed ? 'teal lighten-3' : null}`}
+			onClick={() => toggleTask(task)}
+		>
+			<div
+				className={`card-content ${task.completed ? 'white-text' : null}`}
+				style={task.completed ? { textDecoration: 'line-through' } : null}
+			>
 				<span className="card-title">{task.taskName}</span>
 				<p>{task.description}</p>
 			</div>
 			<div className="card-action">
 				<a href="#/">
-					<i className="material-icons" onClick={() => selectTask(task)}>
+					<i
+						className="material-icons"
+						onClick={e => {
+							e.stopPropagation();
+							selectTask(task);
+						}}
+					>
 						edit
 					</i>
 				</a>
 				<a href="#/">
-					<i className="material-icons" onClick={() => deleteTask(task.id)}>
+					<i
+						className="material-icons"
+						onClick={async () => {
+							await deleteTask(task.id);
+							deselectTask();
+						}}
+					>
 						delete
 					</i>
 				</a>
@@ -28,5 +52,5 @@ const TaskItem = ({ task, deleteTask, selectTask }) => {
 
 export default connect(
 	null,
-	{ deleteTask, selectTask }
+	{ deleteTask, selectTask, toggleTask, deselectTask }
 )(TaskItem);
