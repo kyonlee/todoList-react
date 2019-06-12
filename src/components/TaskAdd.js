@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { createTask } from '../actions';
+import { createTask, deselectTask } from '../actions';
 import TaskForm from './TaskForm';
 
 const TaskAdd = ({ createTask }) => {
@@ -10,8 +10,9 @@ const TaskAdd = ({ createTask }) => {
 			<h2>Add a new task</h2>
 			<TaskForm
 				initValues={{ taskName: '', description: '' }}
-				btnConfig="Add"
+				btnConfig="add"
 				onSubmit={formValues => createTask(formValues)}
+				onCancel={deselectTask}
 			/>
 		</div>
 	);
@@ -19,5 +20,5 @@ const TaskAdd = ({ createTask }) => {
 
 export default connect(
 	null,
-	{ createTask }
+	{ createTask, deselectTask }
 )(TaskAdd);

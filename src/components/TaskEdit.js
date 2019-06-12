@@ -10,12 +10,13 @@ const TaskEdit = ({ selectedTask, editTask, deselectTask }) => {
 			<h2>Edit a task</h2>
 			<TaskForm
 				initValues={selectedTask}
-				btnConfig="Edit"
+				btnConfig="edit"
 				onSubmit={async formValues => {
 					const { id, completed } = selectedTask;
 					await editTask({ ...formValues, id, completed });
 					deselectTask();
 				}}
+				onCancel={deselectTask}
 			/>
 		</div>
 	);

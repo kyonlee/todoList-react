@@ -1,11 +1,8 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { connect } from 'react-redux';
 
-import { deselectTask } from '../actions';
-
-const TaskForm = ({ initValues, btnConfig, onSubmit, deselectTask }) => {
+const TaskForm = ({ initValues, btnConfig, onSubmit, onCancel }) => {
 	return (
 		<Formik
 			enableReinitialize={true}
@@ -19,7 +16,7 @@ const TaskForm = ({ initValues, btnConfig, onSubmit, deselectTask }) => {
 				document.activeElement.blur();
 				resetForm();
 			}}
-			onReset={() => deselectTask()}
+			onReset={() => onCancel()}
 			validationSchema={Yup.object().shape({
 				taskName: Yup.string().required('Please provide a task name'),
 				description: Yup.string().required('Please provide a description')
@@ -72,18 +69,24 @@ const TaskForm = ({ initValues, btnConfig, onSubmit, deselectTask }) => {
 								)}
 							</div>
 						</div>
-						<button
-							className="btn red"
-							type="button"
-							disabled={isSubmitting}
-							onClick={handleReset}
-						>
-							Cancel
-						</button>
-						<button className="btn right" type="submit" disabled={isSubmitting}>
-							<i className="material-icons right">{btnConfig.toLowerCase()}</i>
-							{btnConfig}
-						</button>
+						<div className="row">
+							<button
+								className="btn red"
+								type="button"
+								disabled={isSubmitting}
+								onClick={handleReset}
+							>
+								Cancel
+							</button>
+							<button
+								className="btn right"
+								type="submit"
+								disabled={isSubmitting}
+							>
+								<i className="material-icons right">{btnConfig}</i>
+								{btnConfig}
+							</button>
+						</div>
 					</form>
 				);
 			}}
@@ -91,7 +94,4 @@ const TaskForm = ({ initValues, btnConfig, onSubmit, deselectTask }) => {
 	);
 };
 
-export default connect(
-	null,
-	{ deselectTask }
-)(TaskForm);
+export default TaskForm;

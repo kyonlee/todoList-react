@@ -1,22 +1,5 @@
-This is a simple todo list app built with create-react-app.
+# todoList-react
 
-## Quick Start
+This is a todo list app with built with React, Redux, and using formik for the forms. It has been deployed here: [https://guarded-brushlands-94481.herokuapp.com/](https://guarded-brushlands-94481.herokuapp.com/).
 
-```
-$ git clone https://github.com/kyonlee/todo-first.git
-$ cd todo-first
-$ npm install
-$ npm start
-```
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

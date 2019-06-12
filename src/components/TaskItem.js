@@ -12,7 +12,7 @@ const TaskItem = ({
 }) => {
 	return (
 		<div
-			className={`card ${task.completed ? 'teal lighten-3' : null}`}
+			className={`card hoverable ${task.completed ? 'teal lighten-3' : null}`}
 			onClick={() => toggleTask(task)}
 		>
 			<div
