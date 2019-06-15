@@ -5,18 +5,26 @@ import TaskItem from './TaskItem';
 
 const TaskList = ({ tasks }) => {
 	const [filter, setFilter] = useState('all');
+	const [search, setSearch] = useState('');
 
 	const FILTER_TABS = ['all', 'active', 'completed'];
+
+	//search feature
+	const searchTasks = tasks.filter(
+		task =>
+			task.taskName.toLowerCase().includes(search.toLowerCase().trim()) ||
+			task.description.toLowerCase().includes(search.toLowerCase().trim())
+	);
 
 	// filtering feature
 	function filterTasks() {
 		switch (filter) {
 			case 'active':
-				return tasks.filter(task => task.completed === false);
+				return searchTasks.filter(task => task.completed === false);
 			case 'completed':
-				return tasks.filter(task => task.completed === true);
+				return searchTasks.filter(task => task.completed === true);
 			default:
-				return tasks;
+				return searchTasks;
 		}
 	}
 
@@ -50,6 +58,15 @@ const TaskList = ({ tasks }) => {
 			) : (
 				<div>
 					<div className="row">
+						<div className="input-field col s5">
+							<i className="material-icons prefix">search</i>
+							<input
+								placeholder="Search"
+								type="text"
+								value={search}
+								onChange={e => setSearch(e.target.value)}
+							/>
+						</div>
 						<div className="right">{renderTabs()}</div>
 					</div>
 					{renderList(filterTasks())}
